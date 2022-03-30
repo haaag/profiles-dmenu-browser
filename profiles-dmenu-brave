@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Simple Script for launching Brave's Profiles
+
+DIR_PROFILES=$HOME/.config/BraveSoftware/Brave-Browser/
+GET_PROFILES_NAMES=$(fd -g Preferences "$DIR_PROFILES" -X jq '.profile.name')
+
+CHOOSEN=$(echo -e "$GET_PROFILES_NAMES" | cut -d'/' -f7 | sed 's/"//g' | dmenu -i -h 24 -p "Profile: ")
+
+[[ -z $CHOOSEN ]] && exit
+
+TARGET_PROFILE='"name":"'$CHOOSEN'"'
+
+PROFILE_FOLDER=$(rg -lF "$TARGET_PROFILE" "$DIR_PROFILES" -g '!Local State')
+
+PROFILE=$(echo "$PROFILE_FOLDER" | cut -d'/' -f7)
+
+[[ -z $PROFILE ]] && exit
+
+brave --profile-directory="$PROFILE" >/dev/null 2>&1 &
