@@ -17,9 +17,11 @@ __The profile name must be unique.__
 ├── $XDG_CONFIG_HOME/BraveSoftware/Brave-Browser/
     ├── Default
     │   └── Preferences
+    ├── Profile 1
+    │   └── Preferences
     ├── Profile 2
     │   └── Preferences
-    └── Profile 1
+    └── Profile 3
         └── Preferences
 ```
 
