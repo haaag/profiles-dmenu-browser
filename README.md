@@ -9,3 +9,4 @@ __The profile name must be unique.__
 - [dmenu](https://tools.suckless.org/dmenu/)
 - [fd](https://github.com/sharkdp/fd)
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
+- [jq](https://github.com/stedolan/jq)
