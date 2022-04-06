@@ -2,19 +2,29 @@
 
 # Simple Script for launching Brave's Profiles
 
+# If Brave
 DIR_PROFILES=$HOME/.config/BraveSoftware/Brave-Browser/
-GET_PROFILES_NAMES=$(fd -g Preferences "$DIR_PROFILES" -X jq '.profile.name')
 
-CHOOSEN=$(echo -e "$GET_PROFILES_NAMES" | cut -d'/' -f7 | sed 's/"//g' | dmenu -i -h 24 -p "Profile: ")
+# Get profile names from json file 'Preferences'
+profile_directories=$(fd -g Preferences -t file "$DIR_PROFILES" -E "Guest Profile" -E "System Profile" -E "/Preferences" -x jq '.profile.name')
 
-[[ -z $CHOOSEN ]] && exit
+# Pipe profile names, use sed to remove double quotes and show them in dmenu.
+chosen_profile=$(echo -e "$profile_directories" | cut -d'/' -f7 | sed 's/"//g' | dmenu -i -h 24 -p "Profile: ")
 
-TARGET_PROFILE='"name":"'$CHOOSEN'"'
+# If nothing is selected, exit the script.
+[[ $chosen_profile ]] || exit
 
-PROFILE_FOLDER=$(rg -lF "$TARGET_PROFILE" "$DIR_PROFILES" -g '!Local State')
+# Target profile to search for.
+target_profile="\"name\":\"$chosen_profile\""
 
-PROFILE=$(echo "$PROFILE_FOLDER" | cut -d'/' -f7)
+# Search for "name":"profile-name" in Preferences file and get profile folder
+PROFILE_FOLDER=$(rg -lF "$target_profile" "$DIR_PROFILES" -g '!Local State')
 
-[[ -z $PROFILE ]] && exit
+# Cut profile path and get the folder where the Preferences file is located
+final_profile=$(echo "$PROFILE_FOLDER" | cut -d'/' -f7)
 
-brave --profile-directory="$PROFILE" >/dev/null 2>&1 &
+# If nothing is selected, exit the script.
+[[ $final_profile ]] || exit
+
+# execute Brave
+brave --profile-directory="$final_profile" >/dev/null 2>&1 &
