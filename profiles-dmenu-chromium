@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# Simple Script for launching Chromum's Profiles
+
+# Chromium
+DIR_PROFILES=$HOME/.config/chromium
+
+# Get profile names from json file 'Preferences'
+profile_directories=$(fd -g Preferences -t file "$DIR_PROFILES" -E "Guest Profile" -E "System Profile" -E "/Preferences" -x jq '.profile.name')
+
+# Pipe profile names, usar sed para remover quotes dobles and show them in dmenu.
+chosen_profile=$(echo -e "$profile_directories" | cut -d'/' -f7 | sed 's/"//g' | dmenu -i -h 24 -p "Profile: ")
+
+# If nothing is selected, exit the script.
+[[ $chosen_profile ]] || exit
+
+# Target profile to search for.
+target_profile="\"name\":\"$chosen_profile\""
+
+#
+PROFILE_FOLDER=$(rg -lF "$target_profile" "$DIR_PROFILES" -g '!Local State')
+
+final_profile=$(echo "$PROFILE_FOLDER" | cut -d'/' -f6)
+
+# If nothing is selected, exit the script.
+[[ $final_profile ]] || exit
+
+# Execute Chromium
+chromium --profile-directory="$final_profile" >/dev/null 2>&1 &
