@@ -6,7 +6,7 @@
 DIR_PROFILES=$HOME/.config/chromium
 
 # Get profile names from json file 'Preferences'
-profile_directories=$(fd -g Preferences -t file "$DIR_PROFILES" -E "Guest Profile" -E "System Profile" -E "/Preferences" -x jq '.profile.name')
+profile_directories=$(fd -g Preferences -t file "$DIR_PROFILES" -E "Guest Profile" -E "System Profile" -x jq '.profile.name')
 
 # Pipe profile names, usar sed para remover quotes dobles and show them in dmenu.
 chosen_profile=$(echo -e "$profile_directories" | cut -d'/' -f7 | sed 's/"//g' | dmenu -i -h 24 -p "Profile: ")
