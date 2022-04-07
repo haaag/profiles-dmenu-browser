@@ -14,13 +14,13 @@ __The profile name must be unique.__
 ### Estructura
 
 ```
-├── $XDG_CONFIG_HOME/browser/
-    ├── Profile 1
-    │   └── Preferences
-    ├── Profile 2
-    │   └── Preferences
-    └── Profile 3
-        └── Preferences
+$XDG_CONFIG_HOME/browser/
+├── Profile 1
+│   └── Preferences
+├── Profile 2
+│   └── Preferences
+└── Profile 3
+    └── Preferences
 ```
 
 
@@ -47,3 +47,9 @@ The `Preferences` file is a very long `json` file. I used [jq](https://github.co
 =======> "name": "profile-name-im-looking-for",
 }
 ```
+
+### TODO
+- [ ] Create profiles
+    - `browser` --user-data-dir=test2 --no-first-run --no-default-browser-check
+- [ ] Delete profiles
+- [ ] Maybe rename profiles
