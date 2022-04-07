@@ -1,6 +1,6 @@
 # Simple Script for launching browser's Profiles
 
-It takes care of reading the 'Preferences' file in each profile directory in `$XDG_CONFIG_HOME/BraveSoftware/Brave-Browser/` or `$XDG_CONFIG_HOME/chromium/`, gets the name of the profile, pipes to dmenu and opens brave with the selected profile.
+It takes care of reading the 'Preferences' file in each profile directory in `$XDG_CONFIG_HOME/BraveSoftware/Brave-Browser/` or `$XDG_CONFIG_HOME/chromium/`, gets the name of the profile, pipes to dmenu and opens browser with the selected profile.
 
 __The profile name must be unique.__
 
