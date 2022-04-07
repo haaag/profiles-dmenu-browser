@@ -15,8 +15,6 @@ __The profile name must be unique.__
 
 ```
 ├── $XDG_CONFIG_HOME/browser/
-    ├── Default
-    │   └── Preferences
     ├── Profile 1
     │   └── Preferences
     ├── Profile 2
